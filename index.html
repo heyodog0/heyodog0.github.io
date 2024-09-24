@@ -147,10 +147,10 @@
         </div>
 
         <div id="controls">
-            <button id="up" class="control-btn" onclick="movePlayer(0, -1)">↑</button>
-            <button id="left" class="control-btn" onclick="movePlayer(-1, 0)">←</button>
-            <button id="down" class="control-btn" onclick="movePlayer(0, 1)">↓</button>
-            <button id="right" class="control-btn" onclick="movePlayer(1, 0)">→</button>
+            <button id="up" class="control-btn" ontouchstart="movePlayer(0, -1); event.preventDefault();" onclick="movePlayer(0, -1)">↑</button>
+            <button id="left" class="control-btn" ontouchstart="movePlayer(-1, 0); event.preventDefault();" onclick="movePlayer(-1, 0)">←</button>
+            <button id="down" class="control-btn" ontouchstart="movePlayer(0, 1); event.preventDefault();" onclick="movePlayer(0, 1)">↓</button>
+            <button id="right" class="control-btn" ontouchstart="movePlayer(1, 0); event.preventDefault();" onclick="movePlayer(1, 0)">→</button>
         </div>
 
         <div class="social-icons">
@@ -293,6 +293,14 @@
 
         gameState = createRandomLevel();
         renderGame();
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
