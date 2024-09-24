@@ -23,8 +23,8 @@
             margin-bottom: 30px;
         }
         nav a {
-            display: block;
-            margin: 10px 0;
+            display: inline-block;
+            margin: 0 10px;
             color: #333;
             text-decoration: none;
         }
@@ -36,6 +36,20 @@
             color: #333;
             text-decoration: none;
         }
+        #game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            max-width: 300px;
+            margin: 30px auto;
+        }
+        .grid-cell {
+            width: 100%;
+            padding-bottom: 100%;
+            background-color: #eee;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -45,11 +59,31 @@
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
     </nav>
+
+    <div id="game-grid"></div>
     
     <div class="social-icons">
         <a href="https://github.com/yourusername">GitHub</a>
         <a href="https://twitter.com/yourusername">Twitter</a>
         <a href="https://scholar.google.com/citations?user=youruserid">Google Scholar</a>
     </div>
+
+    <script>
+        const grid = document.getElementById('game-grid');
+        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+
+        // Create grid
+        for (let i = 0; i < 25; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell';
+            cell.addEventListener('click', changeColor);
+            grid.appendChild(cell);
+        }
+
+        function changeColor(e) {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            e.target.style.backgroundColor = randomColor;
+        }
+    </script>
 </body>
 </html>
