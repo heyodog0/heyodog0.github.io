@@ -47,14 +47,9 @@
             width: 40px;
             height: 40px;
             border: 1px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
         }
         .player {
             background-color: blue;
-            color: white;
         }
         .block {
             background-color: red;
@@ -81,16 +76,35 @@
     </div>
 
     <script>
-        const gameState = {
-            grid: [
-                [0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0],
-                [0, 2, 3, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 0, 0, 0]
-            ],
-            playerPos: { x: 2, y: 3 }
+        const EMPTY = 0;
+        const PLAYER = 1;
+        const BLOCK = 2;
+        const TARGET = 3;
+
+        let gameState = {
+            grid: [],
+            playerPos: { x: 0, y: 0 }
         };
+
+        function createRandomLevel() {
+            const grid = Array(5).fill().map(() => Array(5).fill(EMPTY));
+            const playerPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+            grid[playerPos.y][playerPos.x] = PLAYER;
+
+            let blockPos;
+            do {
+                blockPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+            } while (grid[blockPos.y][blockPos.x] !== EMPTY);
+            grid[blockPos.y][blockPos.x] = BLOCK;
+
+            let targetPos;
+            do {
+                targetPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+            } while (grid[targetPos.y][targetPos.x] !== EMPTY);
+            grid[targetPos.y][targetPos.x] = TARGET;
+
+            return { grid, playerPos };
+        }
 
         function renderGame() {
             const container = document.getElementById('game-container');
@@ -105,17 +119,14 @@
                     cell.className = 'game-cell';
                     
                     switch (gameState.grid[y][x]) {
-                        case 1:
+                        case PLAYER:
                             cell.classList.add('player');
-                            cell.textContent = '😊';
                             break;
-                        case 2:
+                        case BLOCK:
                             cell.classList.add('block');
-                            cell.textContent = '📦';
                             break;
-                        case 3:
+                        case TARGET:
                             cell.classList.add('target');
-                            cell.textContent = 'X';
                             break;
                     }
                     
@@ -131,19 +142,20 @@
             const newY = gameState.playerPos.y + dy;
             
             if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5) {
-                if (gameState.grid[newY][newX] === 2) {
+                if (gameState.grid[newY][newX] === BLOCK) {
                     const pushX = newX + dx;
                     const pushY = newY + dy;
                     
-                    if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && gameState.grid[pushY][pushX] === 0) {
-                        gameState.grid[pushY][pushX] = 2;
-                        gameState.grid[newY][newX] = 1;
-                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 0;
+                    if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
+                        (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
+                        gameState.grid[pushY][pushX] = BLOCK;
+                        gameState.grid[newY][newX] = PLAYER;
+                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = EMPTY;
                         gameState.playerPos = { x: newX, y: newY };
                     }
-                } else if (gameState.grid[newY][newX] === 0 || gameState.grid[newY][newX] === 3) {
-                    gameState.grid[newY][newX] = 1;
-                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 0;
+                } else if (gameState.grid[newY][newX] === EMPTY || gameState.grid[newY][newX] === TARGET) {
+                    gameState.grid[newY][newX] = PLAYER;
+                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = EMPTY;
                     gameState.playerPos = { x: newX, y: newY };
                 }
             }
@@ -153,9 +165,18 @@
         }
 
         function checkWin() {
-            if (gameState.grid[2][1] === 2) {
-                alert('Congratulations! You won!');
+            for (let y = 0; y < gameState.grid.length; y++) {
+                for (let x = 0; x < gameState.grid[y].length; x++) {
+                    if (gameState.grid[y][x] === TARGET) {
+                        return; // If there's still a target, the game isn't won
+                    }
+                }
             }
+            // If we've reached here, all targets are covered
+            setTimeout(() => {
+                gameState = createRandomLevel();
+                renderGame();
+            }, 500); // Wait 500ms before resetting for a fade-out effect
         }
 
         document.addEventListener('keydown', (event) => {
@@ -175,6 +196,7 @@
             }
         });
 
+        gameState = createRandomLevel();
         renderGame();
     </script>
 </body>
