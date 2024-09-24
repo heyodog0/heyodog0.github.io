@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ryan Truong</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        body, html {
+            height: 100%;
             margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
         }
         h1 {
             font-family: Georgia, serif;
             font-size: 2.5em;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         nav {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         nav a {
             display: inline-block;
@@ -28,17 +34,13 @@
             color: #333;
             text-decoration: none;
         }
-        .social-icons {
-            margin-top: 30px;
-        }
-        .social-icons a {
-            margin: 0 10px;
-            color: #333;
-            text-decoration: none;
+        .game-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
         }
         #game-container {
             display: inline-block;
-            margin-top: 20px;
         }
         .game-row {
             display: flex;
@@ -48,31 +50,98 @@
             height: 40px;
             border: 1px solid #ccc;
         }
-        .player {
+        .player { background-color: blue; }
+        .block { background-color: red; }
+        .target { background-color: lightgreen; }
+        .player-on-target {
             background-color: blue;
+            border: 2px solid lightgreen;
         }
-        .block {
-            background-color: red;
+        .legend {
+            font-size: 0.8em;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .target {
-            background-color: lightgreen;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border: 1px solid #000;
+        }
+        .reset-btn {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        #controls {
+            margin-top: 20px;
+        }
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        .social-icons {
+            margin-top: 20px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <h1>Ryan Truong</h1>
-    
-    <nav>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-    </nav>
+    <div class="content">
+        <h1>Ryan Truong</h1>
+        
+        <nav>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+        </nav>
 
-    <div id="game-container"></div>
+        <div class="game-wrapper">
+            <div id="game-container"></div>
+            <div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color player"></div>
+                        <span>Player</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color block"></div>
+                        <span>Block</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color target"></div>
+                        <span>Target</span>
+                    </div>
+                </div>
+                <button class="reset-btn" onclick="resetGame()">Reset</button>
+            </div>
+        </div>
 
-    <div class="social-icons">
-        <a href="https://github.com/yourusername">GitHub</a>
-        <a href="https://twitter.com/yourusername">Twitter</a>
-        <a href="https://scholar.google.com/citations?user=youruserid">Google Scholar</a>
+        <div id="controls">
+            <button class="control-btn" onclick="movePlayer(0, -1)">↑</button><br>
+            <button class="control-btn" onclick="movePlayer(-1, 0)">←</button>
+            <button class="control-btn" onclick="movePlayer(0, 1)">↓</button>
+            <button class="control-btn" onclick="movePlayer(1, 0)">→</button>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://github.com/yourusername">GitHub</a>
+            <a href="https://twitter.com/yourusername">Twitter</a>
+            <a href="https://scholar.google.com/citations?user=youruserid">Google Scholar</a>
+        </div>
     </div>
 
     <script>
@@ -80,10 +149,12 @@
         const PLAYER = 1;
         const BLOCK = 2;
         const TARGET = 3;
+        const PLAYER_ON_TARGET = 4;
 
         let gameState = {
             grid: [],
-            playerPos: { x: 0, y: 0 }
+            playerPos: { x: 0, y: 0 },
+            targetPos: { x: 0, y: 0 }
         };
 
         function createRandomLevel() {
@@ -93,7 +164,10 @@
 
             let blockPos;
             do {
-                blockPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+                blockPos = { 
+                    x: Math.floor(Math.random() * 3) + 1, 
+                    y: Math.floor(Math.random() * 3) + 1 
+                };
             } while (grid[blockPos.y][blockPos.x] !== EMPTY);
             grid[blockPos.y][blockPos.x] = BLOCK;
 
@@ -103,7 +177,7 @@
             } while (grid[targetPos.y][targetPos.x] !== EMPTY);
             grid[targetPos.y][targetPos.x] = TARGET;
 
-            return { grid, playerPos };
+            return { grid, playerPos, targetPos };
         }
 
         function renderGame() {
@@ -128,6 +202,9 @@
                         case TARGET:
                             cell.classList.add('target');
                             break;
+                        case PLAYER_ON_TARGET:
+                            cell.classList.add('player-on-target');
+                            break;
                     }
                     
                     row.appendChild(cell);
@@ -149,34 +226,36 @@
                     if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
                         (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
                         gameState.grid[pushY][pushX] = BLOCK;
-                        gameState.grid[newY][newX] = PLAYER;
-                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = EMPTY;
+                        gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? PLAYER_ON_TARGET : PLAYER;
+                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
                         gameState.playerPos = { x: newX, y: newY };
+                        
+                        if (pushX === gameState.targetPos.x && pushY === gameState.targetPos.y) {
+                            checkWin();
+                        }
                     }
                 } else if (gameState.grid[newY][newX] === EMPTY || gameState.grid[newY][newX] === TARGET) {
-                    gameState.grid[newY][newX] = PLAYER;
-                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = EMPTY;
+                    gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? PLAYER_ON_TARGET : PLAYER;
+                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
                     gameState.playerPos = { x: newX, y: newY };
                 }
             }
             
             renderGame();
-            checkWin();
         }
 
         function checkWin() {
-            for (let y = 0; y < gameState.grid.length; y++) {
-                for (let x = 0; x < gameState.grid[y].length; x++) {
-                    if (gameState.grid[y][x] === TARGET) {
-                        return; // If there's still a target, the game isn't won
-                    }
-                }
+            if (gameState.grid[gameState.targetPos.y][gameState.targetPos.x] === BLOCK) {
+                setTimeout(() => {
+                    gameState = createRandomLevel();
+                    renderGame();
+                }, 500);
             }
-            // If we've reached here, all targets are covered
-            setTimeout(() => {
-                gameState = createRandomLevel();
-                renderGame();
-            }, 500); // Wait 500ms before resetting for a fade-out effect
+        }
+
+        function resetGame() {
+            gameState = createRandomLevel();
+            renderGame();
         }
 
         document.addEventListener('keydown', (event) => {
