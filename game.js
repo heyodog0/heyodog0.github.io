@@ -45,21 +45,25 @@ function renderGame() {
             const cell = document.createElement('div');
             cell.className = 'game-cell';
             
+            // Create a separate element for the content
+            const content = document.createElement('div');
+            
             switch (gameState.grid[y][x]) {
                 case PLAYER:
-                    cell.classList.add('player');
+                    content.className = 'player';
                     break;
                 case BLOCK:
-                    cell.classList.add('block');
+                    content.className = 'block';
                     break;
                 case TARGET:
-                    cell.classList.add('target');
+                    content.className = 'target';
                     break;
                 case PLAYER_ON_TARGET:
-                    cell.classList.add('player-on-target');
+                    content.className = 'player-on-target';
                     break;
             }
             
+            cell.appendChild(content);
             row.appendChild(cell);
         }
         

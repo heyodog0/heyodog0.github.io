@@ -39,16 +39,27 @@ nav a {
     display: flex;
 }
 .game-cell {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border: 1px solid #ccc;
+    position: relative; /* Add this */
 }
+.player, .block, .target, .player-on-target {
+    position: absolute; /* Add this */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .player { background-color: blue; }
 .block { background-color: red; }
-.target { background-color: lightgreen; }
+.target { background-color: lightseagreen; }
+
 .player-on-target {
     background-color: blue;
-    border: 2px solid lightgreen;
+    border: 2px solid lightseagreen;
+    box-sizing: border-box;
 }
 .legend {
     font-size: 0.8em;
