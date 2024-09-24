@@ -1,4 +1,3 @@
-
 const EMPTY = 0;
 const PLAYER = 1;
 const BLOCK = 2;
@@ -80,7 +79,7 @@ function movePlayer(dx, dy) {
             if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
                 (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
                 gameState.grid[pushY][pushX] = BLOCK;
-                gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? PLAYER_ON_TARGET : PLAYER;
+                gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? TARGET : EMPTY;
                 gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
                 gameState.playerPos = { x: newX, y: newY };
                 
@@ -100,10 +99,8 @@ function movePlayer(dx, dy) {
 
 function checkWin() {
     if (gameState.grid[gameState.targetPos.y][gameState.targetPos.x] === BLOCK) {
-        setTimeout(() => {
-            gameState = createRandomLevel();
-            renderGame();
-        }, 500);
+        alert("You win! Starting a new level.");
+        resetGame();
     }
 }
 
@@ -112,30 +109,23 @@ function resetGame() {
     renderGame();
 }
 
-document.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'ArrowUp':
-            movePlayer(0, -1);
-            break;
-        case 'ArrowDown':
-            movePlayer(0, 1);
-            break;
-        case 'ArrowLeft':
-            movePlayer(-1, 0);
-            break;
-        case 'ArrowRight':
-            movePlayer(1, 0);
-            break;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    resetGame();
+    
+    document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+            case 'ArrowUp':
+                movePlayer(0, -1);
+                break;
+            case 'ArrowDown':
+                movePlayer(0, 1);
+                break;
+            case 'ArrowLeft':
+                movePlayer(-1, 0);
+                break;
+            case 'ArrowRight':
+                movePlayer(1, 0);
+                break;
+        }
+    });
 });
-
-gameState = createRandomLevel();
-renderGame();
-var lastTouchEnd = 0;
-document.addEventListener('touchend', function(event) {
-    var now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
