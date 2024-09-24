@@ -1,131 +1,140 @@
 const EMPTY = 0;
-const PLAYER = 1;
-const BLOCK = 2;
-const TARGET = 3;
-const PLAYER_ON_TARGET = 4;
+        const PLAYER = 1;
+        const BLOCK = 2;
+        const TARGET = 3;
+        const PLAYER_ON_TARGET = 4;
 
-let gameState = {
-    grid: [],
-    playerPos: { x: 0, y: 0 },
-    targetPos: { x: 0, y: 0 }
-};
-
-function createRandomLevel() {
-    const grid = Array(5).fill().map(() => Array(5).fill(EMPTY));
-    const playerPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
-    grid[playerPos.y][playerPos.x] = PLAYER;
-
-    let blockPos;
-    do {
-        blockPos = { 
-            x: Math.floor(Math.random() * 3) + 1, 
-            y: Math.floor(Math.random() * 3) + 1 
+        let gameState = {
+            grid: [],
+            playerPos: { x: 0, y: 0 },
+            targetPos: { x: 0, y: 0 }
         };
-    } while (grid[blockPos.y][blockPos.x] !== EMPTY);
-    grid[blockPos.y][blockPos.x] = BLOCK;
 
-    let targetPos;
-    do {
-        targetPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
-    } while (grid[targetPos.y][targetPos.x] !== EMPTY);
-    grid[targetPos.y][targetPos.x] = TARGET;
+        function createRandomLevel() {
+            const grid = Array(5).fill().map(() => Array(5).fill(EMPTY));
+            const playerPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+            grid[playerPos.y][playerPos.x] = PLAYER;
 
-    return { grid, playerPos, targetPos };
-}
+            let blockPos;
+            do {
+                blockPos = { 
+                    x: Math.floor(Math.random() * 3) + 1, 
+                    y: Math.floor(Math.random() * 3) + 1 
+                };
+            } while (grid[blockPos.y][blockPos.x] !== EMPTY);
+            grid[blockPos.y][blockPos.x] = BLOCK;
 
-function renderGame() {
-    const container = document.getElementById('game-container');
-    container.innerHTML = '';
-    
-    for (let y = 0; y < gameState.grid.length; y++) {
-        const row = document.createElement('div');
-        row.className = 'game-row';
-        
-        for (let x = 0; x < gameState.grid[y].length; x++) {
-            const cell = document.createElement('div');
-            cell.className = 'game-cell';
-            
-            switch (gameState.grid[y][x]) {
-                case PLAYER:
-                    cell.classList.add('player');
-                    break;
-                case BLOCK:
-                    cell.classList.add('block');
-                    break;
-                case TARGET:
-                    cell.classList.add('target');
-                    break;
-                case PLAYER_ON_TARGET:
-                    cell.classList.add('player-on-target');
-                    break;
-            }
-            
-            row.appendChild(cell);
+            let targetPos;
+            do {
+                targetPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
+            } while (grid[targetPos.y][targetPos.x] !== EMPTY);
+            grid[targetPos.y][targetPos.x] = TARGET;
+
+            return { grid, playerPos, targetPos };
         }
-        
-        container.appendChild(row);
-    }
-}
 
-function movePlayer(dx, dy) {
-    const newX = gameState.playerPos.x + dx;
-    const newY = gameState.playerPos.y + dy;
-    
-    if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5) {
-        if (gameState.grid[newY][newX] === BLOCK) {
-            const pushX = newX + dx;
-            const pushY = newY + dy;
+        function renderGame() {
+            const container = document.getElementById('game-container');
+            container.innerHTML = '';
             
-            if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
-                (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
-                gameState.grid[pushY][pushX] = BLOCK;
-                gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? TARGET : EMPTY;
-                gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
-                gameState.playerPos = { x: newX, y: newY };
+            for (let y = 0; y < gameState.grid.length; y++) {
+                const row = document.createElement('div');
+                row.className = 'game-row';
                 
-                if (pushX === gameState.targetPos.x && pushY === gameState.targetPos.y) {
-                    checkWin();
+                for (let x = 0; x < gameState.grid[y].length; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'game-cell';
+                    
+                    switch (gameState.grid[y][x]) {
+                        case PLAYER:
+                            cell.classList.add('player');
+                            break;
+                        case BLOCK:
+                            cell.classList.add('block');
+                            break;
+                        case TARGET:
+                            cell.classList.add('target');
+                            break;
+                        case PLAYER_ON_TARGET:
+                            cell.classList.add('player-on-target');
+                            break;
+                    }
+                    
+                    row.appendChild(cell);
+                }
+                
+                container.appendChild(row);
+            }
+        }
+
+        function movePlayer(dx, dy) {
+            const newX = gameState.playerPos.x + dx;
+            const newY = gameState.playerPos.y + dy;
+            
+            if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5) {
+                if (gameState.grid[newY][newX] === BLOCK) {
+                    const pushX = newX + dx;
+                    const pushY = newY + dy;
+                    
+                    if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
+                        (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
+                        gameState.grid[pushY][pushX] = BLOCK;
+                        gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? PLAYER_ON_TARGET : PLAYER;
+                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
+                        gameState.playerPos = { x: newX, y: newY };
+                        
+                        if (pushX === gameState.targetPos.x && pushY === gameState.targetPos.y) {
+                            checkWin();
+                        }
+                    }
+                } else if (gameState.grid[newY][newX] === EMPTY || gameState.grid[newY][newX] === TARGET) {
+                    gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? PLAYER_ON_TARGET : PLAYER;
+                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
+                    gameState.playerPos = { x: newX, y: newY };
                 }
             }
-        } else if (gameState.grid[newY][newX] === EMPTY || gameState.grid[newY][newX] === TARGET) {
-            gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? PLAYER_ON_TARGET : PLAYER;
-            gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
-            gameState.playerPos = { x: newX, y: newY };
+            
+            renderGame();
         }
-    }
-    
-    renderGame();
-}
 
-function checkWin() {
-    if (gameState.grid[gameState.targetPos.y][gameState.targetPos.x] === BLOCK) {
-        alert("You win! Starting a new level.");
-        resetGame();
-    }
-}
-
-function resetGame() {
-    gameState = createRandomLevel();
-    renderGame();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    resetGame();
-    
-    document.addEventListener('keydown', (event) => {
-        switch (event.key) {
-            case 'ArrowUp':
-                movePlayer(0, -1);
-                break;
-            case 'ArrowDown':
-                movePlayer(0, 1);
-                break;
-            case 'ArrowLeft':
-                movePlayer(-1, 0);
-                break;
-            case 'ArrowRight':
-                movePlayer(1, 0);
-                break;
+        function checkWin() {
+            if (gameState.grid[gameState.targetPos.y][gameState.targetPos.x] === BLOCK) {
+                setTimeout(() => {
+                    gameState = createRandomLevel();
+                    renderGame();
+                }, 500);
+            }
         }
-    });
-});
+
+        function resetGame() {
+            gameState = createRandomLevel();
+            renderGame();
+        }
+
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        gameState = createRandomLevel();
+        renderGame();
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
