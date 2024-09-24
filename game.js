@@ -44,8 +44,7 @@ function renderGame() {
         for (let x = 0; x < gameState.grid[y].length; x++) {
             const cell = document.createElement('div');
             cell.className = 'game-cell';
-            
-            // Create a separate element for the content
+
             const content = document.createElement('div');
             
             switch (gameState.grid[y][x]) {
@@ -160,7 +159,9 @@ document.addEventListener('keydown', (event) => {
 });
 
 gameState = createRandomLevel();
+
 renderGame();
+
 var lastTouchEnd = 0;
 document.addEventListener('touchend', function(event) {
     var now = (new Date()).getTime();
