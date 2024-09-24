@@ -8,39 +8,49 @@
 </head>
 <body>
     <div class="content">
-        <header>
+        <div class="name-photo">
             <h1>Ryan Truong</h1>
-            <nav>
-                <a href="about.html">About</a>
-                <a href="projects.html">Projects</a>
-                <a href="cv.pdf" target="_blank">CV</a>
-            </nav>
-        </header>
+            <img src="your-photo.jpg" alt="Ryan Truong" class="profile-photo">
+        </div>
 
-        <main>
+        <nav>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="cv.pdf" target="_blank">CV</a>
+        </nav>
+
+        <div class="game-wrapper">
             <div id="game-container"></div>
-            <div class="game-controls">
+            <div>
                 <div class="legend">
-                    <div class="legend-item"><div class="legend-color player"></div>Player</div>
-                    <div class="legend-item"><div class="legend-color block"></div>Block</div>
-                    <div class="legend-item"><div class="legend-color target"></div>Target</div>
+                    <div class="legend-item">
+                        <div class="legend-color player"></div>
+                        Player
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color block"></div>
+                        Block
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color target"></div>
+                        Target
+                    </div>
                 </div>
-                <button onclick="resetGame()" class="reset-button">Reset</button>
+                <button onclick="resetGame()">Reset</button>
             </div>
-            <div id="controls">
-                <button onclick="movePlayer(0, -1)">↑</button>
-                <button onclick="movePlayer(-1, 0)">←</button>
-                <button onclick="movePlayer(0, 1)">↓</button>
-                <button onclick="movePlayer(1, 0)">→</button>
-            </div>
-        </main>
+        </div>
 
-        <footer>
-            <div class="social-icons">
-                <a href="https://github.com/heyodog0" target="_blank">GitHub</a>
-                <a href="https://x.com/ryanvtruong" target="_blank">Twitter</a>
-            </div>
-        </footer>
+        <div id="controls">
+            <button onclick="movePlayer(0, -1)">↑</button>
+            <button onclick="movePlayer(-1, 0)">←</button>
+            <button onclick="movePlayer(0, 1)">↓</button>
+            <button onclick="movePlayer(1, 0)">→</button>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://github.com/heyodog0" target="_blank">GitHub</a>
+            <a href="https://x.com/ryanvtruong" target="_blank">Twitter</a>
+        </div>
     </div>
     <script src="game.js"></script>
 </body>
