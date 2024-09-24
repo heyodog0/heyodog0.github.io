@@ -27,14 +27,49 @@ nav a {
     color: #333;
     text-decoration: none;
 }
-.game-wrapper {
+/* .game-wrapper {
     display: flex;
     align-items: flex-start;
     gap: 20px;
 }
 #game-container {
     display: inline-block;
+} */
+.game-wrapper {
+    position: relative;
+    display: inline-block;
 }
+
+#game-container {
+    transition: filter 0.3s ease;
+}
+
+#game-container.game-won {
+    filter: grayscale(100%) brightness(70%);
+}
+
+.game-controls {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.reset-btn, #play-again-btn {
+    margin: 5px 0;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#win-message {
+    margin: 10px 0;
+    font-weight: bold;
+    color: green;
+}
+
+.hidden {
+    display: none;
+}
+
 .game-row {
     display: flex;
 }

@@ -18,22 +18,10 @@
 
         <div class="game-wrapper">
             <div id="game-container"></div>
-            <div>
-                <!-- <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color player"></div>
-                        <span>Player</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color block"></div>
-                        <span>Block</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color target"></div>
-                        <span>Target</span>
-                    </div>
-                </div> -->
+            <div class="game-controls">
                 <button class="reset-btn" onclick="resetGame()">Reset</button>
+                <div id="win-message" class="hidden">You win!</div>
+                <button id="play-again-btn" class="hidden" onclick="startNewGame()">Play again?</button>
             </div>
         </div>
 

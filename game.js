@@ -103,16 +103,43 @@ function movePlayer(dx, dy) {
 
 function checkWin() {
     if (gameState.grid[gameState.targetPos.y][gameState.targetPos.x] === BLOCK) {
-        setTimeout(() => {
-            gameState = createRandomLevel();
-            renderGame();
-        }, 500);
+        showWinEffect();
     }
+}
+
+function showWinEffect() {
+    const gameContainer = document.getElementById('game-container');
+    const winMessage = document.getElementById('win-message');
+    const playAgainBtn = document.getElementById('play-again-btn');
+    
+    gameContainer.classList.add('game-won');
+    winMessage.classList.remove('hidden');
+    playAgainBtn.classList.remove('hidden');
+}
+
+function startNewGame() {
+    const gameContainer = document.getElementById('game-container');
+    const winMessage = document.getElementById('win-message');
+    const playAgainBtn = document.getElementById('play-again-btn');
+    
+    gameContainer.classList.remove('game-won');
+    winMessage.classList.add('hidden');
+    playAgainBtn.classList.add('hidden');
+    
+    resetGame();
 }
 
 function resetGame() {
     gameState = createRandomLevel();
     renderGame();
+    
+    const gameContainer = document.getElementById('game-container');
+    const winMessage = document.getElementById('win-message');
+    const playAgainBtn = document.getElementById('play-again-btn');
+    
+    gameContainer.classList.remove('game-won');
+    winMessage.classList.add('hidden');
+    playAgainBtn.classList.add('hidden');
 }
 
 document.addEventListener('keydown', (event) => {
