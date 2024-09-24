@@ -11,14 +11,11 @@ body {
     padding: 20px;
 }
 
-header {
-    margin-bottom: 20px;
-}
-
 .name-photo {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .profile-photo {
@@ -29,7 +26,7 @@ header {
 }
 
 nav {
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 nav a {
@@ -89,30 +86,17 @@ nav a {
     color: #333;
 }
 
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+/* Game-specific styles */
+.game-row {
+    display: flex;
 }
 
-.project {
+.game-cell {
+    width: 60px;
+    height: 60px;
     border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 5px;
 }
 
-.project img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.project-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 3px;
+.player-on-target {
+    background-color: purple;
 }
