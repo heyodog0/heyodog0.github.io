@@ -20,31 +20,34 @@
         </nav>
 
         <div class="game-wrapper">
-            <div id="game-container"></div>
-            <div>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color player"></div>
-                        Player
+            <div class="game-container">
+                <div id="game-container"></div>
+                <div class="game-info">
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color player"></div>
+                            Player
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color block"></div>
+                            Block
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color target"></div>
+                            Target
+                        </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color block"></div>
-                        Block
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color target"></div>
-                        Target
-                    </div>
+                    <button onclick="resetGame()">Reset</button>
                 </div>
-                <button onclick="resetGame()">Reset</button>
             </div>
-        </div>
-
-        <div id="controls">
-            <button onclick="movePlayer(0, -1)">↑</button>
-            <button onclick="movePlayer(-1, 0)">←</button>
-            <button onclick="movePlayer(0, 1)">↓</button>
-            <button onclick="movePlayer(1, 0)">→</button>
+            <div id="controls">
+                <button onclick="movePlayer(0, -1)">↑</button>
+                <div>
+                    <button onclick="movePlayer(-1, 0)">←</button>
+                    <button onclick="movePlayer(1, 0)">→</button>
+                </div>
+                <button onclick="movePlayer(0, 1)">↓</button>
+            </div>
         </div>
 
         <div class="social-icons">
