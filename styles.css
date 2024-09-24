@@ -202,3 +202,22 @@ nav a {
 .project-link:hover {
     background-color: #0056b3;
 }
+
+.contact-info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.contact-info h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
