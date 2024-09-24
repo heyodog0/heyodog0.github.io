@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ryan Truong</title>
-    <style>
-        body, html {
+    <link rel="stylesheet" href="styles.css">
+        <!-- body, html {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -113,8 +113,7 @@
             margin: 0 10px;
             color: #333;
             text-decoration: none;
-        }
-    </style>
+        } -->
 </head>
 <body>
     <div class="content">
@@ -131,11 +130,11 @@
                 <div class="legend">
                     <div class="legend-item">
                         <div class="legend-color player"></div>
-                        <span>Player</span>
+                        <span>Player, thats you!</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color block"></div>
-                        <span>Block</span>
+                        <span>Block that you push</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color target"></div>
@@ -154,14 +153,12 @@
         </div>
 
         <div class="social-icons">
-            <a href="https://github.com/yourusername">GitHub</a>
-            <a href="https://twitter.com/yourusername">Twitter</a>
-            <a href="https://scholar.google.com/citations?user=youruserid">Google Scholar</a>
+            <a href="https://github.com/heyodog0">GitHub</a>
+            <a href="https://x.com/ryanvtruong">Twitter</a>
         </div>
     </div>
 
-    <script>
-        const EMPTY = 0;
+        <!-- const EMPTY = 0;
         const PLAYER = 1;
         const BLOCK = 2;
         const TARGET = 3;
@@ -300,7 +297,7 @@
                 event.preventDefault();
             }
             lastTouchEnd = now;
-        }, false);
-    </script>
+        }, false); -->
+    <script src="game.js"></script>
 </body>
 </html>
