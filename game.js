@@ -1,4 +1,4 @@
-# game.js
+
 const EMPTY = 0;
 const PLAYER = 1;
 const BLOCK = 2;
