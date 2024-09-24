@@ -82,14 +82,30 @@
         }
         #controls {
             margin-top: 20px;
+            display: inline-grid;
+            grid-template-areas:
+                ". up ."
+                "left down right";
+            gap: 2px;
         }
         .control-btn {
             width: 40px;
             height: 40px;
             font-size: 20px;
-            margin: 2px;
             cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        .control-btn:hover {
+            background-color: #e0e0e0;
+        }
+        #up { grid-area: up; }
+        #left { grid-area: left; }
+        #down { grid-area: down; }
+        #right { grid-area: right; }
         .social-icons {
             margin-top: 20px;
         }
@@ -131,10 +147,10 @@
         </div>
 
         <div id="controls">
-            <button class="control-btn" onclick="movePlayer(0, -1)">↑</button><br>
-            <button class="control-btn" onclick="movePlayer(-1, 0)">←</button>
-            <button class="control-btn" onclick="movePlayer(0, 1)">↓</button>
-            <button class="control-btn" onclick="movePlayer(1, 0)">→</button>
+            <button id="up" class="control-btn" onclick="movePlayer(0, -1)">↑</button>
+            <button id="left" class="control-btn" onclick="movePlayer(-1, 0)">←</button>
+            <button id="down" class="control-btn" onclick="movePlayer(0, 1)">↓</button>
+            <button id="right" class="control-btn" onclick="movePlayer(1, 0)">→</button>
         </div>
 
         <div class="social-icons">
