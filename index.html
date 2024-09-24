@@ -36,19 +36,31 @@
             color: #333;
             text-decoration: none;
         }
-        #game-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-            max-width: 300px;
-            margin: 30px auto;
+        #game-container {
+            display: inline-block;
+            margin-top: 20px;
         }
-        .grid-cell {
-            width: 100%;
-            padding-bottom: 100%;
-            background-color: #eee;
-            transition: background-color 0.3s;
-            cursor: pointer;
+        .game-row {
+            display: flex;
+        }
+        .game-cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .player {
+            background-color: blue;
+            color: white;
+        }
+        .block {
+            background-color: red;
+        }
+        .target {
+            background-color: lightgreen;
         }
     </style>
 </head>
@@ -60,8 +72,8 @@
         <a href="projects.html">Projects</a>
     </nav>
 
-    <div id="game-grid"></div>
-    
+    <div id="game-container"></div>
+
     <div class="social-icons">
         <a href="https://github.com/yourusername">GitHub</a>
         <a href="https://twitter.com/yourusername">Twitter</a>
@@ -69,21 +81,101 @@
     </div>
 
     <script>
-        const grid = document.getElementById('game-grid');
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+        const gameState = {
+            grid: [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 2, 3, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0]
+            ],
+            playerPos: { x: 2, y: 3 }
+        };
 
-        // Create grid
-        for (let i = 0; i < 25; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'grid-cell';
-            cell.addEventListener('click', changeColor);
-            grid.appendChild(cell);
+        function renderGame() {
+            const container = document.getElementById('game-container');
+            container.innerHTML = '';
+            
+            for (let y = 0; y < gameState.grid.length; y++) {
+                const row = document.createElement('div');
+                row.className = 'game-row';
+                
+                for (let x = 0; x < gameState.grid[y].length; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'game-cell';
+                    
+                    switch (gameState.grid[y][x]) {
+                        case 1:
+                            cell.classList.add('player');
+                            cell.textContent = '😊';
+                            break;
+                        case 2:
+                            cell.classList.add('block');
+                            cell.textContent = '📦';
+                            break;
+                        case 3:
+                            cell.classList.add('target');
+                            cell.textContent = 'X';
+                            break;
+                    }
+                    
+                    row.appendChild(cell);
+                }
+                
+                container.appendChild(row);
+            }
         }
 
-        function changeColor(e) {
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            e.target.style.backgroundColor = randomColor;
+        function movePlayer(dx, dy) {
+            const newX = gameState.playerPos.x + dx;
+            const newY = gameState.playerPos.y + dy;
+            
+            if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5) {
+                if (gameState.grid[newY][newX] === 2) {
+                    const pushX = newX + dx;
+                    const pushY = newY + dy;
+                    
+                    if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && gameState.grid[pushY][pushX] === 0) {
+                        gameState.grid[pushY][pushX] = 2;
+                        gameState.grid[newY][newX] = 1;
+                        gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 0;
+                        gameState.playerPos = { x: newX, y: newY };
+                    }
+                } else if (gameState.grid[newY][newX] === 0 || gameState.grid[newY][newX] === 3) {
+                    gameState.grid[newY][newX] = 1;
+                    gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 0;
+                    gameState.playerPos = { x: newX, y: newY };
+                }
+            }
+            
+            renderGame();
+            checkWin();
         }
+
+        function checkWin() {
+            if (gameState.grid[2][1] === 2) {
+                alert('Congratulations! You won!');
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        renderGame();
     </script>
 </body>
 </html>
