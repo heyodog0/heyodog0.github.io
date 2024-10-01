@@ -10,6 +10,8 @@ let gameState = {
     targetPos: { x: 0, y: 0 }
 };
 
+let initialGameState = null;
+
 function createRandomLevel() {
     const grid = Array(5).fill().map(() => Array(5).fill(EMPTY));
     const playerPos = { x: Math.floor(Math.random() * 5), y: Math.floor(Math.random() * 5) };
@@ -125,11 +127,19 @@ function startNewGame() {
     winMessage.classList.add('hidden');
     playAgainBtn.classList.add('hidden');
     
-    resetGame();
+    gameState = createRandomLevel();
+    initialGameState = JSON.parse(JSON.stringify(gameState)); // Store initial state
+    renderGame();
 }
 
 function resetGame() {
-    gameState = createRandomLevel();
+    if (initialGameState) {
+        gameState = JSON.parse(JSON.stringify(initialGameState)); // Deep copy the initial state
+    } else {
+        gameState = createRandomLevel();
+        initialGameState = JSON.parse(JSON.stringify(gameState));
+    }
+    
     renderGame();
     
     const gameContainer = document.getElementById('game-container');
@@ -158,9 +168,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-gameState = createRandomLevel();
-
-renderGame();
+startNewGame();
 
 var lastTouchEnd = 0;
 document.addEventListener('touchend', function(event) {
