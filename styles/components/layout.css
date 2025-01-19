@@ -1,0 +1,75 @@
+/* Theme variables and dark mode styles */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --nav-link-color: #333333;
+    --card-bg: #f9f9f9;
+    --border-color: #dddddd;
+    --toggle-bg: #f0f0f0;
+    --toggle-color: #333333;
+}
+
+:root.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --nav-link-color: #ffffff;
+    --card-bg: #2d2d2d;
+    --border-color: #404040;
+    --toggle-bg: #404040;
+    --toggle-color: #ffffff;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--toggle-bg);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: var(--toggle-color);
+}
+
+/* Dark mode specific overrides */
+.dark-mode .player { background-color: #4a9eff; }
+.dark-mode .block { background-color: #ff6b6b; }
+.dark-mode .target { background-color: #4ade80; }
+
+/* Transitions */
+* {
+    transition: background-color 0.5s ease, color 0.2s ease, border-color 0.5s ease;
+}
+
+body, html {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.7s ease, color 0.2s ease;
+}
+
+h1, h2, h3, p, a, nav a, .social-icons a {
+    transition: color 0.4s ease;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.social-icons a:hover {
+    opacity: 1;
+} 
