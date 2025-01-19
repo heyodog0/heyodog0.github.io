@@ -355,3 +355,29 @@ h1, h2, h3, p, a, nav a, .social-icons a {
     opacity: 1;         /* Full opacity on hover */
     text-decoration: none;
 }
+
+nav a {
+    display: inline-block;
+    margin: 0 10px;
+    color: var(--nav-link-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+nav a:hover {
+    opacity: 1;
+}
+
+.back-home {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.back-home:hover {
+    opacity: 1;
+}
