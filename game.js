@@ -84,8 +84,11 @@ function movePlayer(dx, dy) {
             if (pushX >= 0 && pushX < 5 && pushY >= 0 && pushY < 5 && 
                 (gameState.grid[pushY][pushX] === EMPTY || gameState.grid[pushY][pushX] === TARGET)) {
                 gameState.grid[pushY][pushX] = BLOCK;
-                gameState.grid[newY][newX] = gameState.grid[gameState.playerPos.y][gameState.playerPos.x] === PLAYER_ON_TARGET ? PLAYER_ON_TARGET : PLAYER;
-                gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
+                gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? 
+                    PLAYER_ON_TARGET : PLAYER;
+                gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 
+                    (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? 
+                    TARGET : EMPTY;
                 gameState.playerPos = { x: newX, y: newY };
                 
                 if (pushX === gameState.targetPos.x && pushY === gameState.targetPos.y) {
@@ -93,8 +96,11 @@ function movePlayer(dx, dy) {
                 }
             }
         } else if (gameState.grid[newY][newX] === EMPTY || gameState.grid[newY][newX] === TARGET) {
-            gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? PLAYER_ON_TARGET : PLAYER;
-            gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? TARGET : EMPTY;
+            gameState.grid[newY][newX] = (newX === gameState.targetPos.x && newY === gameState.targetPos.y) ? 
+                PLAYER_ON_TARGET : PLAYER;
+            gameState.grid[gameState.playerPos.y][gameState.playerPos.x] = 
+                (gameState.playerPos.x === gameState.targetPos.x && gameState.playerPos.y === gameState.targetPos.y) ? 
+                TARGET : EMPTY;
             gameState.playerPos = { x: newX, y: newY };
         }
     }
