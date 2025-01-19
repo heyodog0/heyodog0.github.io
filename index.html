@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Immediately apply theme before page renders
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
     <title>Ryan Truong</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="color-scheme" content="light dark">
 </head>
 <body>
     <div class="content">
@@ -12,9 +21,9 @@
         
         <nav>
             <a href="about.html">About</a>
-            <!-- <a href="projects.html">Projects</a>
-            <a href="goals.html">Goals</a> -->
-            <a href="cv_ryant_112024_2.pdf" target="_blank">CV</a>
+            <!-- <a href="projects.html">Stuff</a> -->
+            <!-- <a href="goals.html">Goals</a> -->
+            <a href="ryan_cv.pdf" target="_blank">CV</a>
         </nav>
 
         <div class="game-wrapper">
@@ -33,17 +42,14 @@
             <button id="right" class="control-btn" ontouchstart="movePlayer(1, 0); event.preventDefault();" onclick="movePlayer(1, 0)">→</button>
         </div>
 
-        <!-- <div class="contact-info">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:ryanvt@utexas.edu">ryanvt@utexas.edu</a></p>
-        </div> -->
-
         <div class="social-icons">
             <a href="mailto:ryanvt@utexas.edu">ryanvt@utexas.edu</a>
             <a href="https://github.com/heyodog0">GitHub</a>
-            <a href="https://x.com/ryanvtruong">Twitter</a>
+            <a href="https://bsky.app/profile/heyodogo.bsky.social">BlueSky</a>
+            <a href="https://x.com/ryanvtruong">X</a>
         </div>
     </div>
     <script src="game.js"></script>
+    <script src="theme.js"></script>
 </body>
 </html>

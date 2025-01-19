@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Immediately apply theme before page renders
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
     <title>About - Ryan Truong</title>
     <style>
         body {
@@ -30,7 +40,7 @@
 <body>
     <h1>About</h1>
     
-    <p>I am a recent psychology graduate from UT Austin who currently work as a macaque wet-lab technician at Gorislab and as a remote RA for a grad student + postdoc at MIT. </p>
+    <p>I am a recent psychology graduate from UT Austin who currently work as a macaque wet-lab technician at Gorislab and as a remote RA for a grad student @ MIT. </p>
 
     <p>I am also an aspiring cognitive scientist who wants to build computational models about how people reason about the world. I am particularly interested in creating experimental tasks that are more generalizable and engaging and want to bridge my interests from my interdisciplinary experience in a low-level and high-level cognition.  </p>
 
@@ -40,6 +50,8 @@
 
     <p>I want to think and approach problems like a computational systems neuroscientist, but want to explore problems that are more aligned with higher-level cognition (e.g. thinking, learning, etc).  </p>
     
-    <a href="index.html">Back to Home</a>
+    <a href="index.html">Home</a>
+
+    <script src="theme.js"></script>
 </body>
 </html>

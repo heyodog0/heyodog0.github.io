@@ -122,10 +122,12 @@ function startNewGame() {
     const gameContainer = document.getElementById('game-container');
     const winMessage = document.getElementById('win-message');
     const playAgainBtn = document.getElementById('play-again-btn');
+    const resetBtn = document.querySelector('.reset-btn');
     
     gameContainer.classList.remove('game-won');
     winMessage.classList.add('hidden');
     playAgainBtn.classList.add('hidden');
+    resetBtn.classList.remove('hidden');
     
     gameState = createRandomLevel();
     initialGameState = JSON.parse(JSON.stringify(gameState)); // Store initial state
