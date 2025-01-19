@@ -42,7 +42,7 @@
 .dark-mode .player { background-color: #4a9eff; }
 .dark-mode .block { background-color: #ff6b6b; }
 .dark-mode .target { background-color: #4ade80; }
-
+.dark-mode .player-on-target { background-color: #4a9eff; }
 /* Transitions */
 * {
     transition: background-color 0.5s ease, color 0.2s ease, border-color 0.5s ease;
