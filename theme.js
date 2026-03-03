@@ -30,11 +30,6 @@ function createThemeToggle() {
 
     let animating = false;
 
-    function finishAnimation() {
-        document.documentElement.classList.remove('no-transitions');
-        animating = false;
-    }
-
     function toggleTheme() {
         if (animating) return;
         animating = true;
@@ -46,56 +41,27 @@ function createThemeToggle() {
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
 
-        const maxRadius = Math.hypot(
-            Math.max(x, window.innerWidth - x),
-            Math.max(y, window.innerHeight - y)
-        );
-
-        // Remove page-fade overlay if still animating, so it can't bleed through
+        // Remove page-fade overlay if still active
         const pageFade = document.getElementById('page-fade');
         if (pageFade) pageFade.remove();
 
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: ${willBeDark ? '#1a1a1a' : '#ffffff'};
-            clip-path: circle(0px at ${x}px ${y}px);
-            pointer-events: none;
-            transition: none;
-        `;
-        document.body.appendChild(overlay);
+        // Set ripple origin for CSS
+        document.documentElement.style.setProperty('--ripple-x', `${x}px`);
+        document.documentElement.style.setProperty('--ripple-y', `${y}px`);
 
-        // Force reflow before animating
-        overlay.getBoundingClientRect();
-
-        overlay.style.transition = 'clip-path 0.8s cubic-bezier(0.9, 0, 1, 1)';
-        overlay.style.clipPath = `circle(${maxRadius}px at ${x}px ${y}px)`;
-
-        // Fallback in case transitionend never fires
-        const fallback = setTimeout(() => {
-            overlay.remove();
-            finishAnimation();
-        }, 1200);
-
-        overlay.addEventListener('transitionend', () => {
-            clearTimeout(fallback);
-
-            // Freeze all transitions so the page snaps instantly to the new theme
-            document.documentElement.classList.add('no-transitions');
+        const applyTheme = () => {
             document.documentElement.classList.toggle('dark-mode');
             button.innerHTML = willBeDark ? sunIcon : moonIcon;
             localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+        };
 
-            // Remove overlay — page is already correct underneath, no fade needed
-            overlay.remove();
-
-            // Restore transitions next frame once the snap has painted
-            requestAnimationFrame(() => {
-                requestAnimationFrame(finishAnimation);
-            });
-        }, { once: true });
+        if (document.startViewTransition) {
+            const transition = document.startViewTransition(applyTheme);
+            transition.finished.then(() => { animating = false; });
+        } else {
+            applyTheme();
+            animating = false;
+        }
     }
 
     button.addEventListener('click', toggleTheme);

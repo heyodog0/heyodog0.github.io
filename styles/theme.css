@@ -48,6 +48,28 @@ body, html {
     color: var(--text-color);
 }
 
-.no-transitions * {
-    transition: none !important;
+/* View Transitions ripple for theme toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.9, 0, 1, 1);
+}
+
+::view-transition-old(root) {
+    animation: none;
+    z-index: 1;
+}
+
+::view-transition-new(root) {
+    z-index: 9999;
+    animation-name: ripple-reveal;
+}
+
+@keyframes ripple-reveal {
+    from {
+        clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+    }
+    to {
+        clip-path: circle(100vmax at var(--ripple-x, 50%) var(--ripple-y, 50%));
+    }
 }
