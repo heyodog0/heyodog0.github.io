@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        // Immediately apply theme before page renders
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
@@ -15,32 +14,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
     <meta name="color-scheme" content="light dark">
+    <style>
+        /* Pin layout from top so title never moves */
+        body { justify-content: flex-start; }
+        .content { justify-content: flex-start; padding-top: calc(50vh - 240px); }
+
+        .swap-container {
+            position: relative;
+            transition: height 0.2s ease;
+        }
+        #about-link {
+            text-decoration: none;
+        }
+        #game-section {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.12s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #bio-panel {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(500px, 90vw);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.12s ease;
+            text-align: center;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        #bio-panel p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="content">
         <h1>Ryan Truong</h1>
-        
+
         <nav>
-            <a href="about.html">About</a>
-            <!-- <a href="projects.html">Stuff</a> -->
-            <!-- <a href="goals.html">Goals</a> -->
+            <a href="#" id="about-link">About</a>
             <a href="ryan_cv.pdf" target="_blank">CV</a>
         </nav>
 
-        <div class="game-wrapper">
-            <div id="game-container"></div>
-            <div class="game-controls">
-                <button class="reset-btn" onclick="resetGame()">Reset</button>
-                <div id="win-message" class="hidden">You win!</div>
-                <button id="play-again-btn" class="hidden" onclick="startNewGame()">Play again?</button>
+        <div class="swap-container">
+            <div id="game-section">
+                <div class="game-wrapper">
+                    <div id="game-container"></div>
+                    <div class="game-controls">
+                        <button class="reset-btn" onclick="resetGame()">Reset</button>
+                        <div id="win-message" class="hidden">You win!</div>
+                        <button id="play-again-btn" class="hidden" onclick="startNewGame()">Play again?</button>
+                    </div>
+                </div>
+                <div id="controls">
+                    <button id="up" class="control-btn" ontouchstart="movePlayer(0, -1); event.preventDefault();" onclick="movePlayer(0, -1)">↑</button>
+                    <button id="left" class="control-btn" ontouchstart="movePlayer(-1, 0); event.preventDefault();" onclick="movePlayer(-1, 0)">←</button>
+                    <button id="down" class="control-btn" ontouchstart="movePlayer(0, 1); event.preventDefault();" onclick="movePlayer(0, 1)">↓</button>
+                    <button id="right" class="control-btn" ontouchstart="movePlayer(1, 0); event.preventDefault();" onclick="movePlayer(1, 0)">→</button>
+                </div>
             </div>
-        </div>
 
-        <div id="controls">
-            <button id="up" class="control-btn" ontouchstart="movePlayer(0, -1); event.preventDefault();" onclick="movePlayer(0, -1)">↑</button>
-            <button id="left" class="control-btn" ontouchstart="movePlayer(-1, 0); event.preventDefault();" onclick="movePlayer(-1, 0)">←</button>
-            <button id="down" class="control-btn" ontouchstart="movePlayer(0, 1); event.preventDefault();" onclick="movePlayer(0, 1)">↓</button>
-            <button id="right" class="control-btn" ontouchstart="movePlayer(1, 0); event.preventDefault();" onclick="movePlayer(1, 0)">→</button>
+            <div id="bio-panel">
+                <p>I'm a graduate student working with Sam Gershman in the Psychology program, interested in creating video-game-like experimental tasks and environments to compare how humans and machines learn via reinforcement learning. Through these tasks, I hope to develop models that are both effective in interpreting how humans learn and valuable for optimizing how machines learn.</p>
+            </div>
         </div>
 
         <div class="social-icons">
@@ -51,7 +93,41 @@
             <a href="https://scholar.google.com/citations?user=ryCBg4sAAAAJ&hl=en&oi=ao"><i class="fas fa-graduation-cap"></i></a>
         </div>
     </div>
+
     <script src="game.js"></script>
     <script src="theme.js"></script>
+    <script src="transitions.js"></script>
+    <script>
+        const aboutLink = document.getElementById('about-link');
+        const gameSection = document.getElementById('game-section');
+        const bioPanel = document.getElementById('bio-panel');
+        const swapContainer = document.querySelector('.swap-container');
+        let showingAbout = false;
+
+        swapContainer.style.height = gameSection.scrollHeight + 'px';
+
+        aboutLink.addEventListener('click', e => {
+            e.preventDefault();
+            showingAbout = !showingAbout;
+            aboutLink.textContent = showingAbout ? 'Back' : 'About';
+
+            if (showingAbout) {
+                gameSection.style.opacity = '0';
+                gameSection.style.pointerEvents = 'none';
+                bioPanel.style.opacity = '1';
+                bioPanel.style.pointerEvents = 'auto';
+                // Measure bio height after it's visible
+                requestAnimationFrame(() => {
+                    swapContainer.style.height = bioPanel.scrollHeight + 'px';
+                });
+            } else {
+                bioPanel.style.opacity = '0';
+                bioPanel.style.pointerEvents = 'none';
+                gameSection.style.opacity = '1';
+                gameSection.style.pointerEvents = 'auto';
+                swapContainer.style.height = gameSection.scrollHeight + 'px';
+            }
+        });
+    </script>
 </body>
 </html>
