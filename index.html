@@ -189,6 +189,11 @@
             e.preventDefault();
             showPanel(currentView === 'cv' ? 'game' : 'cv');
         });
+
+        // Reset to game view when returning via back-forward cache
+        window.addEventListener('pageshow', e => {
+            if (e.persisted) showPanel('game');
+        });
     </script>
 </body>
 </html>
