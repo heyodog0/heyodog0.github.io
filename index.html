@@ -192,7 +192,20 @@
 
         // Reset to game view when returning via back-forward cache
         window.addEventListener('pageshow', e => {
-            if (e.persisted) showPanel('game');
+            if (e.persisted) {
+                currentView = 'game';
+                aboutLink.textContent = 'About';
+                cvLink.textContent = 'CV';
+                contentEl.style.paddingTop = '';
+                cvPanel.classList.remove('active');
+                cvPanel.style.opacity = '0';
+                bioPanel.style.opacity = '0';
+                bioPanel.style.pointerEvents = 'none';
+                gameSection.style.display = '';
+                gameSection.style.opacity = '1';
+                gameSection.style.pointerEvents = 'auto';
+                swapContainer.style.height = gameSection.scrollHeight + 'px';
+            }
         });
     </script>
 </body>
