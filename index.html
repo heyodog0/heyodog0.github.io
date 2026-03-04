@@ -17,7 +17,7 @@
     <style>
         /* Pin layout from top so title never moves */
         body { justify-content: flex-start; }
-        .content { justify-content: flex-start; padding-top: calc(50vh - 240px); }
+        .content { justify-content: flex-start; padding-top: calc(50vh - 240px); transition: padding-top 0.2s ease; }
 
         .swap-container {
             position: relative;
@@ -51,6 +51,25 @@
         #bio-panel p {
             margin: 0;
         }
+        #cv-panel {
+            display: none;
+            width: min(900px, 95vw);
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 0.12s ease;
+        }
+        #cv-panel.active {
+            display: block;
+        }
+        #cv-panel embed {
+            border: none;
+            border-radius: 4px;
+        }
+        .cv-fallback {
+            margin-top: 0.5rem;
+            text-align: center;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +78,7 @@
 
         <nav>
             <a href="#" id="about-link">About</a>
-            <a href="ryan_cv.pdf" target="_blank">CV</a>
+            <a href="#" id="cv-link">CV</a>
         </nav>
 
         <div class="swap-container">
@@ -83,6 +102,11 @@
             <div id="bio-panel">
                 <p>I'm a graduate student working with Sam Gershman in the Psychology program, interested in creating video-game-like experimental tasks and environments to compare how humans and machines learn via reinforcement learning. Through these tasks, I hope to develop models that are both effective in interpreting how humans learn and valuable for optimizing how machines learn.</p>
             </div>
+
+            <div id="cv-panel">
+                <embed src="ryan_cv.pdf" type="application/pdf" width="100%" height="800px">
+                <p class="cv-fallback"><a href="ryan_cv.pdf">Download CV (PDF)</a></p>
+            </div>
         </div>
 
         <div class="social-icons">
@@ -99,34 +123,71 @@
     <script src="transitions.js"></script>
     <script>
         const aboutLink = document.getElementById('about-link');
+        const cvLink = document.getElementById('cv-link');
         const gameSection = document.getElementById('game-section');
         const bioPanel = document.getElementById('bio-panel');
+        const cvPanel = document.getElementById('cv-panel');
         const swapContainer = document.querySelector('.swap-container');
-        let showingAbout = false;
+        const contentEl = document.querySelector('.content');
+        let currentView = 'game'; // 'game' | 'about' | 'cv'
 
         swapContainer.style.height = gameSection.scrollHeight + 'px';
 
-        aboutLink.addEventListener('click', e => {
-            e.preventDefault();
-            showingAbout = !showingAbout;
-            aboutLink.textContent = showingAbout ? 'Back' : 'About';
+        function showPanel(view) {
+            currentView = view;
 
-            if (showingAbout) {
-                gameSection.style.opacity = '0';
-                gameSection.style.pointerEvents = 'none';
-                bioPanel.style.opacity = '1';
-                bioPanel.style.pointerEvents = 'auto';
-                // Measure bio height after it's visible
-                requestAnimationFrame(() => {
-                    swapContainer.style.height = bioPanel.scrollHeight + 'px';
-                });
-            } else {
-                bioPanel.style.opacity = '0';
-                bioPanel.style.pointerEvents = 'none';
+            // Hide all panels
+            gameSection.style.opacity = '0';
+            gameSection.style.pointerEvents = 'none';
+            gameSection.style.display = '';
+            bioPanel.style.opacity = '0';
+            bioPanel.style.pointerEvents = 'none';
+            cvPanel.classList.remove('active');
+            cvPanel.style.opacity = '0';
+
+            // Reset link text
+            aboutLink.textContent = 'About';
+            cvLink.textContent = 'CV';
+
+            if (view === 'game') {
+                contentEl.style.paddingTop = '';
                 gameSection.style.opacity = '1';
                 gameSection.style.pointerEvents = 'auto';
                 swapContainer.style.height = gameSection.scrollHeight + 'px';
+            } else if (view === 'about') {
+                contentEl.style.paddingTop = '';
+                aboutLink.textContent = 'Back';
+                bioPanel.style.opacity = '1';
+                bioPanel.style.pointerEvents = 'auto';
+                requestAnimationFrame(() => {
+                    swapContainer.style.height = bioPanel.scrollHeight + 'px';
+                });
+            } else if (view === 'cv') {
+                cvLink.textContent = 'Back';
+                // Hide game entirely so CV flows in document
+                gameSection.style.display = 'none';
+                swapContainer.style.height = 'auto';
+                cvPanel.classList.add('active');
+                // Center the CV embed in the viewport
+                const headerH = document.querySelector('h1').offsetHeight +
+                                document.querySelector('nav').offsetHeight + 40;
+                const embedH = 800;
+                const ideal = Math.max(16, (window.innerHeight - headerH - embedH) / 2);
+                contentEl.style.paddingTop = ideal + 'px';
+                requestAnimationFrame(() => {
+                    cvPanel.style.opacity = '1';
+                });
             }
+        }
+
+        aboutLink.addEventListener('click', e => {
+            e.preventDefault();
+            showPanel(currentView === 'about' ? 'game' : 'about');
+        });
+
+        cvLink.addEventListener('click', e => {
+            e.preventDefault();
+            showPanel(currentView === 'cv' ? 'game' : 'cv');
         });
     </script>
 </body>

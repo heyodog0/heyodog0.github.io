@@ -1,6 +1,11 @@
 /* Base styles for typography and layout fundamentals */
-body, html {
+html {
     height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
