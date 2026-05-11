@@ -17,9 +17,10 @@
     <style>
         /* Pin layout from top so title never moves */
         body { justify-content: flex-start; }
-        .content { justify-content: flex-start; padding-top: calc(50vh - 240px); transition: padding-top 0.2s ease; }
+        .content { justify-content: flex-start; padding-top: calc(50vh - 290px); transition: padding-top 0.2s ease; }
         @media (max-width: 600px) {
-            .content { padding-top: 20px; }
+            body { justify-content: center; }
+            .content { justify-content: center; padding-top: 0; }
         }
 
         .swap-container {
