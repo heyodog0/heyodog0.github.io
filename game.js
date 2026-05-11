@@ -178,6 +178,29 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+document.addEventListener('click', (event) => {
+    const moveBtn = event.target.closest('[data-move]');
+    if (moveBtn) {
+        const [dx, dy] = moveBtn.dataset.move.split(',').map(Number);
+        movePlayer(dx, dy);
+        return;
+    }
+    const actionBtn = event.target.closest('[data-action]');
+    if (actionBtn) {
+        if (actionBtn.dataset.action === 'reset') resetGame();
+        else if (actionBtn.dataset.action === 'play-again') startNewGame();
+    }
+});
+
+document.addEventListener('touchstart', (event) => {
+    const moveBtn = event.target.closest('[data-move]');
+    if (moveBtn) {
+        event.preventDefault();
+        const [dx, dy] = moveBtn.dataset.move.split(',').map(Number);
+        movePlayer(dx, dy);
+    }
+}, { passive: false });
+
 startNewGame();
 
 var lastTouchEnd = 0;

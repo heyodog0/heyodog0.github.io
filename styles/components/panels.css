@@ -1,13 +1,28 @@
 /* Page layout, view-swap container, and bio/CV panels */
+:root {
+    --cv-embed-height: 800px;
+    --cv-chrome-height: 120px; /* h1 + nav + spacing */
+}
+
 body { justify-content: flex-start; }
 .content {
     justify-content: flex-start;
     padding-top: calc(50vh - 290px);
     transition: padding-top 0.2s ease;
 }
+.content.view-cv {
+    padding-top: max(
+        16px,
+        calc((100vh - var(--cv-embed-height) - var(--cv-chrome-height)) / 2)
+    );
+}
 @media (max-width: 600px) {
     body { justify-content: center; }
-    .content { justify-content: center; padding-top: 0; }
+    .content,
+    .content.view-cv {
+        justify-content: center;
+        padding-top: 0;
+    }
 }
 
 .swap-container {
@@ -59,6 +74,7 @@ body { justify-content: flex-start; }
 #cv-panel embed {
     border: none;
     border-radius: 4px;
+    height: var(--cv-embed-height);
 }
 .cv-fallback {
     margin-top: 0.5rem;

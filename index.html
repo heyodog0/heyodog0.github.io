@@ -30,16 +30,16 @@
                 <div class="game-wrapper">
                     <div id="game-container"></div>
                     <div class="game-controls">
-                        <button class="reset-btn" onclick="resetGame()">Reset</button>
+                        <button class="reset-btn" data-action="reset">Reset</button>
                         <div id="win-message" class="hidden">You win!</div>
-                        <button id="play-again-btn" class="hidden" onclick="startNewGame()">Play again?</button>
+                        <button id="play-again-btn" class="hidden" data-action="play-again">Play again?</button>
                     </div>
                 </div>
                 <div id="controls">
-                    <button id="up" class="control-btn" ontouchstart="movePlayer(0, -1); event.preventDefault();" onclick="movePlayer(0, -1)">↑</button>
-                    <button id="left" class="control-btn" ontouchstart="movePlayer(-1, 0); event.preventDefault();" onclick="movePlayer(-1, 0)">←</button>
-                    <button id="down" class="control-btn" ontouchstart="movePlayer(0, 1); event.preventDefault();" onclick="movePlayer(0, 1)">↓</button>
-                    <button id="right" class="control-btn" ontouchstart="movePlayer(1, 0); event.preventDefault();" onclick="movePlayer(1, 0)">→</button>
+                    <button id="up" class="control-btn" data-move="0,-1">↑</button>
+                    <button id="left" class="control-btn" data-move="-1,0">←</button>
+                    <button id="down" class="control-btn" data-move="0,1">↓</button>
+                    <button id="right" class="control-btn" data-move="1,0">→</button>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
             </div>
 
             <div id="cv-panel">
-                <embed src="ryan_cv.pdf" type="application/pdf" width="100%" height="800px">
+                <embed src="ryan_cv.pdf" type="application/pdf" width="100%">
                 <p class="cv-fallback"><a href="ryan_cv.pdf">Download CV (PDF)</a></p>
             </div>
         </div>
