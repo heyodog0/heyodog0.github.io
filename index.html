@@ -18,6 +18,9 @@
         /* Pin layout from top so title never moves */
         body { justify-content: flex-start; }
         .content { justify-content: flex-start; padding-top: calc(50vh - 240px); transition: padding-top 0.2s ease; }
+        @media (max-width: 600px) {
+            .content { padding-top: 20px; }
+        }
 
         .swap-container {
             position: relative;
