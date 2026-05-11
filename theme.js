@@ -19,13 +19,7 @@ function createThemeToggle() {
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>`;
 
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDarkInitially = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-
-    if (isDarkInitially) {
-        document.documentElement.classList.add('dark-mode');
-    }
+    const isDarkInitially = document.documentElement.classList.contains('dark-mode');
     button.innerHTML = isDarkInitially ? sunIcon : moonIcon;
 
     let animating = false;

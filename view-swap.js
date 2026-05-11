@@ -1,0 +1,69 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const aboutLink = document.getElementById('about-link');
+    const cvLink = document.getElementById('cv-link');
+    const gameSection = document.getElementById('game-section');
+    const bioPanel = document.getElementById('bio-panel');
+    const cvPanel = document.getElementById('cv-panel');
+    const swapContainer = document.querySelector('.swap-container');
+    const contentEl = document.querySelector('.content');
+    let currentView = 'game';
+
+    swapContainer.style.height = gameSection.scrollHeight + 'px';
+
+    function showPanel(view) {
+        currentView = view;
+
+        gameSection.style.opacity = '0';
+        gameSection.style.pointerEvents = 'none';
+        gameSection.style.display = '';
+        bioPanel.style.opacity = '0';
+        bioPanel.style.pointerEvents = 'none';
+        cvPanel.classList.remove('active');
+        cvPanel.style.opacity = '0';
+
+        aboutLink.textContent = 'About';
+        cvLink.textContent = 'CV';
+
+        if (view === 'game') {
+            contentEl.style.paddingTop = '';
+            gameSection.style.opacity = '1';
+            gameSection.style.pointerEvents = 'auto';
+            swapContainer.style.height = gameSection.scrollHeight + 'px';
+        } else if (view === 'about') {
+            contentEl.style.paddingTop = '';
+            aboutLink.textContent = 'Back';
+            bioPanel.style.opacity = '1';
+            bioPanel.style.pointerEvents = 'auto';
+            requestAnimationFrame(() => {
+                swapContainer.style.height = bioPanel.scrollHeight + 'px';
+            });
+        } else if (view === 'cv') {
+            cvLink.textContent = 'Back';
+            gameSection.style.display = 'none';
+            swapContainer.style.height = 'auto';
+            cvPanel.classList.add('active');
+            const headerH = document.querySelector('h1').offsetHeight +
+                            document.querySelector('nav').offsetHeight + 40;
+            const embedH = cvPanel.querySelector('embed').offsetHeight;
+            const ideal = Math.max(16, (window.innerHeight - headerH - embedH) / 2);
+            contentEl.style.paddingTop = ideal + 'px';
+            requestAnimationFrame(() => {
+                cvPanel.style.opacity = '1';
+            });
+        }
+    }
+
+    aboutLink.addEventListener('click', e => {
+        e.preventDefault();
+        showPanel(currentView === 'about' ? 'game' : 'about');
+    });
+
+    cvLink.addEventListener('click', e => {
+        e.preventDefault();
+        showPanel(currentView === 'cv' ? 'game' : 'cv');
+    });
+
+    window.addEventListener('pageshow', e => {
+        if (e.persisted) showPanel('game');
+    });
+});
