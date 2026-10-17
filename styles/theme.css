@@ -12,6 +12,11 @@
     --toggle-bg: #f0f0f0;
     --toggle-color: #333333;
     --link-color: #2f5fb3;
+    /* the heyodogo.com wordmark's four letter colours */
+    --heyodogo-1: #1631d8;
+    --heyodogo-2: #ff4fa3;
+    --heyodogo-3: #e5a800;
+    --heyodogo-4: #1aa86a;
 }
 
 :root.dark-mode,
@@ -24,6 +29,10 @@
     --toggle-bg: #404040;
     --toggle-color: #ffffff;
     --link-color: #7aa7f0;
+    --heyodogo-1: #8ea2ff;
+    --heyodogo-2: #ff7ab8;
+    --heyodogo-3: #f7c948;
+    --heyodogo-4: #4fd394;
 }
 
 /* Theme toggle button */

@@ -60,11 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // The research panel's height is measured rather than declared, since it
     // changes with the sub-tab and grows as entries are added.
     //
-    // Centring the panel moves the header by (h - 390)/2 px versus the default
-    // position — 390 being where the two rules in layout.css agree
-    // (2 x 290 - 190). For a short panel that works out to a pixel or two,
+    // Centring the panel moves the header by (h - 347)/2 px versus the default
+    // position — 347 being where the two rules in layout.css agree
+    // (2 x 290 - 233). For a short panel that works out to a pixel or two,
     // which just reads as the page twitching, so leave it where it is.
-    const PULL_BREAK_EVEN = 390;
+    const PULL_BREAK_EVEN = 347;
     const PULL_MIN = 32; // ignore shifts smaller than 16px
 
     function sizeResearch() {
