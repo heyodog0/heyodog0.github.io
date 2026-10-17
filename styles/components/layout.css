@@ -87,9 +87,8 @@
     opacity: 1;
 }
 
-/* heyodogo.com, under the icons: a quiet lead-in, then that site's name in its
-   own rainbow letters. The colours are theme variables (theme.css) rather than
-   fixed per theme here, so the ripple's copy of the page picks up the
+/* heyodogo.com, under the icons in that site's own rainbow letters. The
+   colours are theme variables (theme.css) rather than fixed per theme here, so the ripple's copy of the page picks up the
    destination theme's letters and the swap at the end of the ripple changes
    nothing. No colour transitions either: the ripple is the transition. */
 .heyodogo {
@@ -97,13 +96,6 @@
     font-size: 0.8rem;
     color: var(--text-color);
     text-decoration: none;
-}
-.heyodogo .lead {
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-}
-.heyodogo:hover .lead {
-    opacity: 0.85;
 }
 .heyodogo .mark {
     font: 700 1.1rem Gaegu, 'Comic Sans MS', sans-serif;
