@@ -11,8 +11,6 @@
     align-items: baseline;
     gap: 10px;
     margin-bottom: 1.6rem;
-    /* Same nudge as the nav row, so the two rows share an optical centre. */
-    transform: translateX(var(--nav-offset, 0px));
 }
 .subtab {
     color: var(--text-color);

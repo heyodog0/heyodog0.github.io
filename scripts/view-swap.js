@@ -39,22 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentView = 'game';
 
-    /* ---------- nav centring ---------- */
-
-    // Even gaps would leave the middle link off-centre, because the outer
-    // labels aren't the same width. Shift the row by half that difference so
-    // the middle link lands on the page centre without touching the spacing.
-    function alignNav() {
-        // With an even number of links there is no middle item to centre, so
-        // the row centres on its own box and no nudge is wanted.
-        const offset = navEl.children.length % 2 === 0
-            ? 0
-            : (navEl.lastElementChild.getBoundingClientRect().width -
-               navEl.firstElementChild.getBoundingClientRect().width) / 2;
-        // Set on :root so the research sub-tabs can share the same centre.
-        document.documentElement.style.setProperty('--nav-offset', offset.toFixed(2) + 'px');
-    }
-
     /* ---------- view switching ---------- */
 
     // The research panel's height is measured rather than declared, since it
@@ -92,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!view) {
             swapContainer.style.height = gameSection.scrollHeight + 'px';
-            alignNav();
             return;
         }
 
@@ -112,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        alignNav(); // a label just became "Back", changing its width
     }
 
     Object.entries(VIEWS).forEach(([name, view]) => {
@@ -152,9 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    alignNav();
-    window.addEventListener('resize', alignNav);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignNav);
 
     swapContainer.style.height = gameSection.scrollHeight + 'px';
 

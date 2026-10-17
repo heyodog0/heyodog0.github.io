@@ -1,10 +1,10 @@
 /* Main CSS file that imports all other files.
    GitHub Pages lets browsers keep CSS for 4 hours, so when a stylesheet changes,
    bump ?v= on its import here and on main.css in index.html. */
-@import 'base.css?v=4';
+@import 'base.css?v=6';
 @import 'theme.css?v=2';
 @import 'components/layout.css?v=5';
 @import 'components/game.css?v=2';
 @import 'components/panels.css?v=2';
-@import 'components/research.css?v=2';
+@import 'components/research.css?v=6';
 @import 'components/post.css?v=2';
