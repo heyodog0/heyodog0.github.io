@@ -2,6 +2,8 @@
 html {
     height: 100%;
     margin: 0;
+    /* no double-tap zoom (with maximum-scale=1 in the viewport tag); fast taps on the D-pad stay taps */
+    touch-action: manipulation;
 }
 
 body {
