@@ -4,8 +4,8 @@
     /* CV: shrink to fit short viewports so the page itself never scrolls and
        the PDF's own scroll does the paging. */
     --cv-embed-height: min(800px, max(420px, calc(100vh - var(--cv-chrome-height) - 48px)));
-    --cv-chrome-height: 253px;      /* h1 + tagline + nav + fallback link + icons + heyodogo.com */
-    --research-chrome-height: 233px; /* h1 + tagline + nav + icons + heyodogo.com */
+    --cv-chrome-height: 251px;      /* h1 + tagline + nav + fallback link + icons + heyodogo.com */
+    --research-chrome-height: 231px; /* h1 + tagline + nav + icons + heyodogo.com */
 }
 
 /* Both tall views centre themselves vertically. The CV's height comes from a
@@ -87,42 +87,48 @@
     opacity: 1;
 }
 
-/* heyodogo.com, under the icons in that site's own rainbow letters. The colours
-   are theme variables (theme.css) rather than fixed per theme here, so the
-   ripple's copy of the page picks up the destination theme's letters and the
-   swap at the end of the ripple changes nothing. No colour transitions either:
-   the ripple is the transition. */
+/* heyodogo.com, under the icons: a quiet lead-in, then that site's name in its
+   own rainbow letters. The colours are theme variables (theme.css) rather than
+   fixed per theme here, so the ripple's copy of the page picks up the
+   destination theme's letters and the swap at the end of the ripple changes
+   nothing. No colour transitions either: the ripple is the transition. */
 .heyodogo {
     margin-top: 16px;
-    font: 700 1.15rem Gaegu, 'Comic Sans MS', sans-serif;
-    letter-spacing: 0.02em;
+    font-size: 0.8rem;
+    color: var(--text-color);
     text-decoration: none;
-    opacity: 0.85;
-}
-.heyodogo:hover {
-    opacity: 1;
 }
 .heyodogo .lead {
-    margin-right: 0.4em;
-    font: 0.8rem Arial, sans-serif;
-    color: var(--text-color);
-    opacity: 0.65;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
 }
-/* Each letter hops up on its own when pointed at, like heyodogo.com's title. */
+.heyodogo:hover .lead {
+    opacity: 0.85;
+}
+.heyodogo .mark {
+    font: 700 1.1rem Gaegu, 'Comic Sans MS', sans-serif;
+    letter-spacing: 0.02em;
+}
 .heyodogo i {
     display: inline-block;
     font-style: normal;
-    transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 .heyodogo i:nth-of-type(4n+1) { color: var(--heyodogo-1); }
 .heyodogo i:nth-of-type(4n+2) { color: var(--heyodogo-2); }
 .heyodogo i:nth-of-type(4n+3) { color: var(--heyodogo-3); }
 .heyodogo i:nth-of-type(4n+4) { color: var(--heyodogo-4); }
-.heyodogo i:hover {
-    transform: translateY(-4px);
-}
-.heyodogo > span:last-child {
-    color: var(--text-color);
-    opacity: 0.6;
+.heyodogo .mark span {
+    opacity: 0.55;
     font-size: 0.85em;
+}
+/* Each letter hops when pointed at, like heyodogo.com's own title
+   (scripts/heyodogo-link.js adds .hop). */
+.heyodogo i.hop {
+    animation: heyodogo-hop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+@keyframes heyodogo-hop {
+    40% { transform: translateY(-7px) rotate(-8deg) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .heyodogo i.hop { animation: none; }
 }
