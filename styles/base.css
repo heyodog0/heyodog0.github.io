@@ -63,25 +63,7 @@ nav a:hover {
     opacity: 1;
 }
 
-/* Type: Geist for reading, Paper Mono (paper.design, free under the OFL) for the
-   small things — nav, sub-tabs, venues, links and buttons. Georgia stays for the
-   name, tagline and paper titles. */
-@font-face {
-    font-family: 'Paper Mono';
-    src: url('https://cdn.jsdelivr.net/gh/paper-design/paper-mono@main/fonts/webfonts/PaperMono-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Paper Mono';
-    src: url('https://cdn.jsdelivr.net/gh/paper-design/paper-mono@main/fonts/webfonts/PaperMono-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-display: swap;
-}
+/* Buttons (Reset, the D-pad) use the page's Geist rather than the system font. */
 button {
     font-family: inherit;
-}
-nav a, .subtab, .pub-venue, .hl-venue, .hl-links, .pub-note, .reset-btn, #play-again-btn {
-    font-family: 'Paper Mono', ui-monospace, monospace;
-    font-size: 0.92em;
 }
