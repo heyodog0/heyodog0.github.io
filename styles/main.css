@@ -3,7 +3,7 @@
    bump ?v= on its import here and on main.css in index.html. */
 @import 'base.css?v=4';
 @import 'theme.css?v=2';
-@import 'components/layout.css?v=3';
+@import 'components/layout.css?v=5';
 @import 'components/game.css?v=2';
 @import 'components/panels.css?v=2';
 @import 'components/research.css?v=2';

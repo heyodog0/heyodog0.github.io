@@ -38,12 +38,15 @@
        top edge to the game's centre (header + tagline + nav + half the game),
        so this lands the game on the viewport's middle — and because the value
        doesn't depend on the view, the header stays put when a panel opens.
-       The max() keeps it on-screen on short viewports. */
+       The max() keeps it on-screen on short viewports. svh, not vh: iOS
+       Safari's vh is the height with its toolbars hidden, but the page opens
+       with them showing, which left the game below the middle of what you see. */
     .content,
     .content.view-cv,
     .content.view-research {
         justify-content: flex-start;
         padding-top: max(16px, calc(50vh - 313px));
+        padding-top: max(16px, calc(50svh - 313px));
     }
     /* Animating the container height just prolongs the reflow on a phone. */
     .swap-container {
