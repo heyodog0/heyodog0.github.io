@@ -116,7 +116,7 @@
 
 Ying, L.\*, #strong("Truong, R.*"), Tenenbaum, J. B., & Gershman, S. J. (2026). Using Theory of Mind to Arbitrate between Social and Non-social Learning. #emph("(Submitted)")
 
-Ying, L., #strong("Truong, R."), Sharma, P., Zhao, K. I., Cloos, N., Allen, K. R., Griffiths, T. L., Collins, K. M., Hernández-Orallo, J., Isola, P., Gershman, S. J., & Tenenbaum, J. B. (2026). AI Gamestore: Scalable, Open-Ended Evaluation of Machine General Intelligence with Human Games. #emph("(Submitted)")
+Ying, L., #strong("Truong, R."), Sharma, P., Zhao, K. I., Cloos, N., Allen, K. R., Griffiths, T. L., Collins, K. M., Hernández-Orallo, J., Isola, P., Gershman, S. J., & Tenenbaum, J. B. (2026). AI Gamestore: Scalable, Open-Ended Evaluation of Machine General Intelligence with Human Games. #emph("(NeurIPS 2026, Evaluations & Datasets Track)")
 
 Ying, L., #strong("Truong, R."), Collins, K. M., Zhang, C. E., Wei, M., Brooke-Wilson, T., Zhi-Xuan, T., Wong, L., & Tenenbaum, J. B. (2025). Language-Informed Synthesis of Rational Agent Models for Grounded Theory-of-Mind Reasoning On-The-Fly. #emph("(Findings of EMNLP, 2025)")
 
